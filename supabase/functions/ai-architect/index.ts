@@ -223,15 +223,14 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "messages must be an array" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const apiKey = Deno.env.get("LOVABLE_API_KEY");
+    const apiKey = Deno.env.get("OPENAI_API_KEY");
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "LOVABLE_API_KEY not configured" }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ error: "OPENAI_API_KEY not configured. Add it as a Supabase secret: supabase secrets set OPENAI_API_KEY=sk-..." }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     const body: Record<string, unknown> = {
-      model: "openai/gpt-5",
+      model: "gpt-4o",
       stream: true,
-      reasoning: { effort: "medium" },
       messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
     };
     if (allow_tools) {
@@ -239,7 +238,7 @@ Deno.serve(async (req) => {
       body.tool_choice = "auto";
     }
 
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -249,11 +248,11 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Rate limit reached. Try again shortly." }), { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
     if (res.status === 402) {
-      return new Response(JSON.stringify({ error: "AI credits exhausted. Add funds in Settings → Workspace → Usage." }), { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ error: "OpenAI credits exhausted. Check your usage at platform.openai.com." }), { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
     if (!res.ok || !res.body) {
       const text = await res.text();
-      return new Response(JSON.stringify({ error: text || "AI gateway error" }), { status: res.status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ error: text || "OpenAI API error" }), { status: res.status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     return new Response(res.body, {

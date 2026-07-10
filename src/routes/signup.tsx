@@ -5,7 +5,7 @@ import { useAuth } from "@/lib/auth";
 import { CSLogo } from "@/components/CSLogo";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { lovable } from "@/integrations/lovable/index";
+import { oauthClient } from "@/integrations/oauth";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({
@@ -70,7 +70,7 @@ function SignupPage() {
   };
 
   const handleGoogle = async () => {
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/app/dashboard" });
+    const result = await oauthClient.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/app/dashboard" });
     if (result.error) toast.error("Google sign-up failed");
   };
 

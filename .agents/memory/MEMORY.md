@@ -1,0 +1,1 @@
+- [ChronoSquares Lovable migration](chronosquares-migration.md) — how the Lovable→standard TanStack Start migration was done and what to watch for.

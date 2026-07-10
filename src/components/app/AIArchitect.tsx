@@ -247,7 +247,7 @@ export function AIArchitect() {
                 <div className="size-8 rounded-lg bg-brand/15 text-brand flex items-center justify-center"><Sparkles size={14} /></div>
                 <div>
                   <div className="text-sm font-semibold">AI Architect</div>
-                  <div className="text-[10px] text-muted-foreground">Personal-OS architect · Lovable AI</div>
+                  <div className="text-[10px] text-muted-foreground">Personal-OS architect · AI Architect</div>
                 </div>
               </div>
               <div className="flex items-center gap-1">
