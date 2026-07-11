@@ -8,9 +8,9 @@ channel = "stable-25_05"
 [userenv]
 
 [userenv.shared]
-SUPABASE_PUBLISHABLE_KEY = "sb_publishable_LrM30o4PSykNkoS3Ug23Qg_QXlMQLrQ"
+SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_CYxNXXb-kRgFgNI1QTDw_6ncRpHwr"
 SUPABASE_URL = "https://uiontmbucqhyjsijsjhf.supabase.co"
-VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_LrM30o4PSykNkoS3Ug23Qg_QXlMQLrQ"
+VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_i_CYxNXXb-kRgFgNI1QTDw_6ncRpHwr"
 VITE_SUPABASE_URL = "https://uiontmbucqhyjsijsjhf.supabase.co"
 SUPABASE_PROJECT_ID = "uiontmbucqhyjsijsjhf"
 VITE_SUPABASE_PROJECT_ID = "uiontmbucqhyjsijsjhf"

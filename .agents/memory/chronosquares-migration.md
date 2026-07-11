@@ -23,4 +23,10 @@ Migrated ChronoSquares from Lovable platform to a standard TanStack Start v1 app
 ## What still needs user action
 - Set `OPENAI_API_KEY` as a Supabase secret to enable AI Architect.
 - Enable Google OAuth in Supabase Dashboard → Authentication → Providers → Google.
-- Optionally set `SUPABASE_SERVICE_ROLE_KEY` as a Replit secret for server-side admin ops.
+
+## Supabase project/key mismatches (recurring risk)
+When a user pastes a new Supabase key mid-project, verify it against the actual project URL before trusting it — do not assume URL and key are a matched pair.
+
+**Why:** The user supplied a new `sb_publishable_*` key that turned out to belong to a completely different Supabase project than the one already configured (`SUPABASE_URL` in `.env`/env vars). Using them together caused silent failures: DNS resolution errors when the URL was stale, then `"Unregistered API key"` from Supabase's auth endpoint when the key didn't match the URL actually in use.
+
+**How to apply:** Before wiring in a user-supplied Supabase key, `curl` the auth token endpoint with a bogus login (`POST {url}/auth/v1/token?grant_type=password` with a fake email/password, `apikey: <key>` header) — a `401 Unregistered API key` means key/URL mismatch; a `400 invalid_credentials` means the key is valid for that project. Also `.env` is not the source of truth once Replit env vars are set for the same `VITE_*` keys — Vite's `loadEnv` gives priority to real process env vars over `.env` file values, so update Replit env vars, not `.env` (which is filesystem-protected anyway for secrets).
