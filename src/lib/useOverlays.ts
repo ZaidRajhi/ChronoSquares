@@ -1,7 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { useUserPrefs } from "@/lib/userPrefs";
+import { useUserPrefs, type CustomPalette } from "@/lib/userPrefs";
+
+export type OverlayShape = "rounded" | "sharp" | "cloud" | "minimal2d" | "obelisk" | "orbital" | "rune";
+export type WidgetMode = "calm" | "hud" | "terminal" | "poster" | "artifact";
 
 export interface Overlay {
   id: string;
@@ -9,13 +12,11 @@ export interface Overlay {
   name: string;
   description: string;
   preview_swatches: string[];
-  palette: { brand?: string; brandViolet?: string; background?: string; card?: string };
+  palette: CustomPalette;
   plan_tier: string;
   author: string;
   is_default: boolean;
-  shape?: "rounded" | "sharp" | "cloud" | "minimal2d" | "obelisk" | "orbital" | "rune";
-  dimension?: "iso3d" | "flat2d" | "obelisk" | "orbital" | "rune";
-  widget_mode?: "calm" | "hud" | "terminal" | "poster" | "artifact";
+  shape?: OverlayShape;
 }
 
 export interface UserOverlay {
@@ -25,14 +26,46 @@ export interface UserOverlay {
 }
 
 /**
- * Hook for the overlay (skin) system.
- * Loads the catalogue + the user's owned overlays. Applying an overlay
- * writes it to user_overlays AND switches the user's theme to "custom"
- * with the overlay's palette via setCustomPalette.
+ * The `overlays` table only persists `shape` in the database (palette +
+ * preview_swatches double as theme data). Widget mode is a purely
+ * presentational pairing we keep client-side, keyed by slug, so every
+ * overlay also carries a distinct "Widgets" personality without needing a
+ * schema change. Falls back to "calm" for anything not listed here.
+ */
+const WIDGET_MODE_BY_SLUG: Record<string, WidgetMode> = {
+  "obsidian-forest": "calm",
+  "solar-daylight": "poster",
+  "midnight-indigo": "hud",
+  "cyber-cyan": "terminal",
+  "burnt-amber": "terminal",
+  "vapor-chrome": "artifact",
+  "orbital-halo": "hud",
+  "cloud-drift": "poster",
+  "runed-obsidian": "artifact",
+};
+
+export function widgetModeFor(overlay: Pick<Overlay, "slug">): WidgetMode {
+  return WIDGET_MODE_BY_SLUG[overlay.slug] ?? "calm";
+}
+
+const SHAPE_CLASSES = ["shape-rounded", "shape-sharp", "shape-cloud", "shape-minimal2d", "shape-obelisk", "shape-orbital", "shape-rune"];
+const WIDGET_MODE_CLASSES = ["overlay-widgets-calm", "overlay-widgets-hud", "overlay-widgets-terminal", "overlay-widgets-poster", "overlay-widgets-artifact"];
+
+function palettesEqual(a?: CustomPalette | null, b?: CustomPalette | null) {
+  if (!a || !b) return false;
+  return a.brand === b.brand && a.brandViolet === b.brandViolet && a.background === b.background && a.card === b.card;
+}
+
+/**
+ * Hook for the overlay catalogue. The same catalogue entry powers two
+ * independent, separately-applied concerns:
+ *  - Theme (color palette) — see `applyTheme` / `isThemeActive`.
+ *  - Overlay (structural style: Active Squares tile shape + widget mode)
+ *    — see `applyOverlay` / `appliedOverlayId`.
  */
 export function useOverlays() {
   const { user } = useAuth();
-  const { setCustomPalette } = useUserPrefs();
+  const { setCustomPalette, customPalette, theme } = useUserPrefs();
   const [catalogue, setCatalogue] = useState<Overlay[]>([]);
   const [owned, setOwned] = useState<UserOverlay[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,25 +88,46 @@ export function useOverlays() {
   const ownedIds = new Set(owned.map((o) => o.overlay_id));
   const ownedOverlays = catalogue.filter((o) => ownedIds.has(o.id));
   const marketplaceOverlays = catalogue.filter((o) => !ownedIds.has(o.id));
+  const appliedOverlayId = owned.find((o) => o.is_applied)?.overlay_id;
 
-  const apply = useCallback(async (overlay: Overlay) => {
+  /** Themes only change the app-wide color palette. Leaves tile shape / widget mode untouched. */
+  const applyTheme = useCallback(async (overlay: Overlay) => {
+    await setCustomPalette(overlay.palette);
+  }, [setCustomPalette]);
+
+  const isThemeActive = useCallback((overlay: Overlay) => theme === "custom" && palettesEqual(customPalette, overlay.palette), [theme, customPalette]);
+
+  /** Overlays only change dashboard-section structure: Active Squares tile shape + Widgets visual mode. Leaves color theme untouched. */
+  const applyOverlay = useCallback(async (overlay: Overlay) => {
     if (!user) return;
-    // Mark this one applied, all others not
     await supabase.from("user_overlays").update({ is_applied: false }).eq("user_id", user.id);
     await supabase.from("user_overlays").update({ is_applied: true }).eq("user_id", user.id).eq("overlay_id", overlay.id);
-    await setCustomPalette(overlay.palette);
-    // Apply structural shape via body class
+    const shape = overlay.shape ?? "rounded";
+    const mode = widgetModeFor(overlay);
     if (typeof document !== "undefined") {
-      document.body.classList.remove("shape-rounded", "shape-sharp", "shape-cloud", "shape-minimal2d", "shape-obelisk", "shape-orbital", "shape-rune");
-      document.body.classList.add(`shape-${overlay.shape ?? "rounded"}`);
+      document.body.classList.remove(...SHAPE_CLASSES, ...WIDGET_MODE_CLASSES);
+      document.body.classList.add(`shape-${shape}`, `overlay-widgets-${mode}`);
       try {
-        localStorage.setItem("cs_overlay_shape", overlay.shape ?? "rounded");
-        localStorage.setItem("cs_overlay_dimension", overlay.dimension ?? "iso3d");
-        localStorage.setItem("cs_widget_mode", overlay.widget_mode ?? "calm");
+        localStorage.setItem("cs_overlay_shape", shape);
+        localStorage.setItem("cs_widget_mode", mode);
       } catch { /* noop */ }
     }
     setOwned((prev) => prev.map((o) => ({ ...o, is_applied: o.overlay_id === overlay.id })));
-  }, [user, setCustomPalette]);
+  }, [user]);
+
+  const clearOverlay = useCallback(async () => {
+    if (!user) return;
+    await supabase.from("user_overlays").update({ is_applied: false }).eq("user_id", user.id);
+    if (typeof document !== "undefined") {
+      document.body.classList.remove(...SHAPE_CLASSES, ...WIDGET_MODE_CLASSES);
+      document.body.classList.add("shape-rounded", "overlay-widgets-calm");
+      try {
+        localStorage.setItem("cs_overlay_shape", "rounded");
+        localStorage.setItem("cs_widget_mode", "calm");
+      } catch { /* noop */ }
+    }
+    setOwned((prev) => prev.map((o) => ({ ...o, is_applied: false })));
+  }, [user]);
 
   const acquire = useCallback(async (overlay: Overlay) => {
     if (!user) return;
@@ -86,5 +140,11 @@ export function useOverlays() {
     setOwned((prev) => [...prev, data as unknown as UserOverlay]);
   }, [user]);
 
-  return { catalogue, owned, ownedOverlays, marketplaceOverlays, loading, apply, acquire };
+  return {
+    catalogue, owned, ownedOverlays, marketplaceOverlays, loading,
+    appliedOverlayId,
+    applyTheme, isThemeActive,
+    applyOverlay, clearOverlay,
+    acquire,
+  };
 }

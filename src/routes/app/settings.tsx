@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useUserPrefs, type ThemePreference, type NavPosition } from "@/lib/userPrefs";
 import { useAuth } from "@/lib/auth";
-import { Moon, Sun, Monitor, Palette, Sidebar, PanelTop, PanelBottom, Maximize2 } from "lucide-react";
+import { Moon, Sun, Monitor, Palette, Sidebar, PanelTop, PanelBottom, Maximize2, Layers } from "lucide-react";
 import { useState } from "react";
 import { useActiveSquares } from "@/lib/useActiveSquares";
 import { CORE_SQUARES, ADDON_SQUARES } from "@/lib/squares";
-import { OverlaysPicker } from "@/components/app/OverlaysPicker";
+import { ThemesPicker } from "@/components/app/OverlaysPicker";
+import { OverlayStylePicker } from "@/components/app/OverlayStylePicker";
 
 export const Route = createFileRoute("/app/settings")({
   component: SettingsPage,
@@ -74,9 +75,19 @@ function SettingsPage() {
 
         {theme === "custom" && (
           <div className="mt-5 p-5 border border-border rounded-xl bg-card/50">
-            <OverlaysPicker />
+            <ThemesPicker />
           </div>
         )}
+      </section>
+
+      {/* Overlays */}
+      <section>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
+          <Layers size={13} /> Overlays
+        </h2>
+        <div className="p-5 border border-border rounded-xl bg-card/50">
+          <OverlayStylePicker />
+        </div>
       </section>
 
       {/* Navigation */}
