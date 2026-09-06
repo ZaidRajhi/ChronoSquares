@@ -9,59 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
-import { Route as StoreRouteImport } from "./routes/store";
-import { Route as SignupRouteImport } from "./routes/signup";
-import { Route as ResetPasswordRouteImport } from "./routes/reset-password";
-import { Route as LoginRouteImport } from "./routes/login";
-import { Route as FlowgridRouteImport } from "./routes/flowgrid";
-import { Route as AppRouteImport } from "./routes/app";
-import { Route as AboutRouteImport } from "./routes/about";
 import { Route as IndexRouteImport } from "./routes/index";
-import { Route as ChronoblogIndexRouteImport } from "./routes/chronoblog/index";
-import { Route as JoinTokenRouteImport } from "./routes/join/$token";
-import { Route as ChronoblogSlugRouteImport } from "./routes/chronoblog/$slug";
-import { Route as AppSettingsRouteImport } from "./routes/app/settings";
-import { Route as AppProjectRouteImport } from "./routes/app/project";
-import { Route as AppOnboardingRouteImport } from "./routes/app/onboarding";
-import { Route as AppFinanceRouteImport } from "./routes/app/finance";
-import { Route as AppFilesRouteImport } from "./routes/app/files";
-import { Route as AppDashboardRouteImport } from "./routes/app/dashboard";
-import { Route as AppCommunicationRouteImport } from "./routes/app/communication";
+import { Route as AboutRouteImport } from "./routes/about";
+import { Route as AppRouteImport } from "./routes/app";
+import { Route as FlowgridRouteImport } from "./routes/flowgrid";
+import { Route as LoginRouteImport } from "./routes/login";
+import { Route as ResetPasswordRouteImport } from "./routes/reset-password";
+import { Route as SignupRouteImport } from "./routes/signup";
+import { Route as StoreRouteImport } from "./routes/store";
 import { Route as AppAdminRouteImport } from "./routes/app/admin";
+import { Route as AppCommunicationRouteImport } from "./routes/app/communication";
+import { Route as AppDashboardRouteImport } from "./routes/app/dashboard";
+import { Route as AppFilesRouteImport } from "./routes/app/files";
+import { Route as AppFinanceRouteImport } from "./routes/app/finance";
+import { Route as AppOnboardingRouteImport } from "./routes/app/onboarding";
+import { Route as AppProjectRouteImport } from "./routes/app/project";
+import { Route as AppSettingsRouteImport } from "./routes/app/settings";
+import { Route as ChronoblogIndexRouteImport } from "./routes/chronoblog/index";
+import { Route as ChronoblogSlugRouteImport } from "./routes/chronoblog/$slug";
+import { Route as JoinTokenRouteImport } from "./routes/join/$token";
 import { Route as AppAdminIndexRouteImport } from "./routes/app/admin.index";
-import { Route as AppAdminWaitlistRouteImport } from "./routes/app/admin.waitlist";
-import { Route as AppAdminStoreRouteImport } from "./routes/app/admin.store";
-import { Route as AppAdminPreviewRouteImport } from "./routes/app/admin.preview";
 import { Route as AppAdminBlogRouteImport } from "./routes/app/admin.blog";
+import { Route as AppAdminPreviewRouteImport } from "./routes/app/admin.preview";
+import { Route as AppAdminStoreRouteImport } from "./routes/app/admin.store";
+import { Route as AppAdminWaitlistRouteImport } from "./routes/app/admin.waitlist";
 
-const StoreRoute = StoreRouteImport.update({
-  id: "/store",
-  path: "/store",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const SignupRoute = SignupRouteImport.update({
-  id: "/signup",
-  path: "/signup",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: "/reset-password",
-  path: "/reset-password",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const LoginRoute = LoginRouteImport.update({
-  id: "/login",
-  path: "/login",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const FlowgridRoute = FlowgridRouteImport.update({
-  id: "/flowgrid",
-  path: "/flowgrid",
-  getParentRoute: () => rootRouteImport,
-} as any);
-const AppRoute = AppRouteImport.update({
-  id: "/app",
-  path: "/app",
+const IndexRoute = IndexRouteImport.update({
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
 } as any);
 const AboutRoute = AboutRouteImport.update({
@@ -69,54 +44,39 @@ const AboutRoute = AboutRouteImport.update({
   path: "/about",
   getParentRoute: () => rootRouteImport,
 } as any);
-const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+const AppRoute = AppRouteImport.update({
+  id: "/app",
+  path: "/app",
   getParentRoute: () => rootRouteImport,
 } as any);
-const ChronoblogIndexRoute = ChronoblogIndexRouteImport.update({
-  id: "/chronoblog/",
-  path: "/chronoblog/",
+const FlowgridRoute = FlowgridRouteImport.update({
+  id: "/flowgrid",
+  path: "/flowgrid",
   getParentRoute: () => rootRouteImport,
 } as any);
-const JoinTokenRoute = JoinTokenRouteImport.update({
-  id: "/join/$token",
-  path: "/join/$token",
+const LoginRoute = LoginRouteImport.update({
+  id: "/login",
+  path: "/login",
   getParentRoute: () => rootRouteImport,
 } as any);
-const ChronoblogSlugRoute = ChronoblogSlugRouteImport.update({
-  id: "/chronoblog/$slug",
-  path: "/chronoblog/$slug",
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: "/reset-password",
+  path: "/reset-password",
   getParentRoute: () => rootRouteImport,
 } as any);
-const AppSettingsRoute = AppSettingsRouteImport.update({
-  id: "/settings",
-  path: "/settings",
-  getParentRoute: () => AppRoute,
+const SignupRoute = SignupRouteImport.update({
+  id: "/signup",
+  path: "/signup",
+  getParentRoute: () => rootRouteImport,
 } as any);
-const AppProjectRoute = AppProjectRouteImport.update({
-  id: "/project",
-  path: "/project",
-  getParentRoute: () => AppRoute,
+const StoreRoute = StoreRouteImport.update({
+  id: "/store",
+  path: "/store",
+  getParentRoute: () => rootRouteImport,
 } as any);
-const AppOnboardingRoute = AppOnboardingRouteImport.update({
-  id: "/onboarding",
-  path: "/onboarding",
-  getParentRoute: () => AppRoute,
-} as any);
-const AppFinanceRoute = AppFinanceRouteImport.update({
-  id: "/finance",
-  path: "/finance",
-  getParentRoute: () => AppRoute,
-} as any);
-const AppFilesRoute = AppFilesRouteImport.update({
-  id: "/files",
-  path: "/files",
-  getParentRoute: () => AppRoute,
-} as any);
-const AppDashboardRoute = AppDashboardRouteImport.update({
-  id: "/dashboard",
-  path: "/dashboard",
+const AppAdminRoute = AppAdminRouteImport.update({
+  id: "/admin",
+  path: "/admin",
   getParentRoute: () => AppRoute,
 } as any);
 const AppCommunicationRoute = AppCommunicationRouteImport.update({
@@ -124,24 +84,59 @@ const AppCommunicationRoute = AppCommunicationRouteImport.update({
   path: "/communication",
   getParentRoute: () => AppRoute,
 } as any);
-const AppAdminRoute = AppAdminRouteImport.update({
-  id: "/admin",
-  path: "/admin",
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: "/dashboard",
+  path: "/dashboard",
   getParentRoute: () => AppRoute,
+} as any);
+const AppFilesRoute = AppFilesRouteImport.update({
+  id: "/files",
+  path: "/files",
+  getParentRoute: () => AppRoute,
+} as any);
+const AppFinanceRoute = AppFinanceRouteImport.update({
+  id: "/finance",
+  path: "/finance",
+  getParentRoute: () => AppRoute,
+} as any);
+const AppOnboardingRoute = AppOnboardingRouteImport.update({
+  id: "/onboarding",
+  path: "/onboarding",
+  getParentRoute: () => AppRoute,
+} as any);
+const AppProjectRoute = AppProjectRouteImport.update({
+  id: "/project",
+  path: "/project",
+  getParentRoute: () => AppRoute,
+} as any);
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: "/settings",
+  path: "/settings",
+  getParentRoute: () => AppRoute,
+} as any);
+const ChronoblogIndexRoute = ChronoblogIndexRouteImport.update({
+  id: "/chronoblog/",
+  path: "/chronoblog/",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ChronoblogSlugRoute = ChronoblogSlugRouteImport.update({
+  id: "/chronoblog/$slug",
+  path: "/chronoblog/$slug",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const JoinTokenRoute = JoinTokenRouteImport.update({
+  id: "/join/$token",
+  path: "/join/$token",
+  getParentRoute: () => rootRouteImport,
 } as any);
 const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => AppAdminRoute,
 } as any);
-const AppAdminWaitlistRoute = AppAdminWaitlistRouteImport.update({
-  id: "/waitlist",
-  path: "/waitlist",
-  getParentRoute: () => AppAdminRoute,
-} as any);
-const AppAdminStoreRoute = AppAdminStoreRouteImport.update({
-  id: "/store",
-  path: "/store",
+const AppAdminBlogRoute = AppAdminBlogRouteImport.update({
+  id: "/blog",
+  path: "/blog",
   getParentRoute: () => AppAdminRoute,
 } as any);
 const AppAdminPreviewRoute = AppAdminPreviewRouteImport.update({
@@ -149,9 +144,14 @@ const AppAdminPreviewRoute = AppAdminPreviewRouteImport.update({
   path: "/preview",
   getParentRoute: () => AppAdminRoute,
 } as any);
-const AppAdminBlogRoute = AppAdminBlogRouteImport.update({
-  id: "/blog",
-  path: "/blog",
+const AppAdminStoreRoute = AppAdminStoreRouteImport.update({
+  id: "/store",
+  path: "/store",
+  getParentRoute: () => AppAdminRoute,
+} as any);
+const AppAdminWaitlistRoute = AppAdminWaitlistRouteImport.update({
+  id: "/waitlist",
+  path: "/waitlist",
   getParentRoute: () => AppAdminRoute,
 } as any);
 
@@ -329,46 +329,11 @@ export interface RootRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    "/store": {
-      id: "/store";
-      path: "/store";
-      fullPath: "/store";
-      preLoaderRoute: typeof StoreRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/signup": {
-      id: "/signup";
-      path: "/signup";
-      fullPath: "/signup";
-      preLoaderRoute: typeof SignupRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/reset-password": {
-      id: "/reset-password";
-      path: "/reset-password";
-      fullPath: "/reset-password";
-      preLoaderRoute: typeof ResetPasswordRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/login": {
-      id: "/login";
-      path: "/login";
-      fullPath: "/login";
-      preLoaderRoute: typeof LoginRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/flowgrid": {
-      id: "/flowgrid";
-      path: "/flowgrid";
-      fullPath: "/flowgrid";
-      preLoaderRoute: typeof FlowgridRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/app": {
-      id: "/app";
-      path: "/app";
-      fullPath: "/app";
-      preLoaderRoute: typeof AppRouteImport;
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/about": {
@@ -378,74 +343,53 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AboutRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
+    "/app": {
+      id: "/app";
+      path: "/app";
+      fullPath: "/app";
+      preLoaderRoute: typeof AppRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/chronoblog/": {
-      id: "/chronoblog/";
-      path: "/chronoblog";
-      fullPath: "/chronoblog/";
-      preLoaderRoute: typeof ChronoblogIndexRouteImport;
+    "/flowgrid": {
+      id: "/flowgrid";
+      path: "/flowgrid";
+      fullPath: "/flowgrid";
+      preLoaderRoute: typeof FlowgridRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/join/$token": {
-      id: "/join/$token";
-      path: "/join/$token";
-      fullPath: "/join/$token";
-      preLoaderRoute: typeof JoinTokenRouteImport;
+    "/login": {
+      id: "/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof LoginRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/chronoblog/$slug": {
-      id: "/chronoblog/$slug";
-      path: "/chronoblog/$slug";
-      fullPath: "/chronoblog/$slug";
-      preLoaderRoute: typeof ChronoblogSlugRouteImport;
+    "/reset-password": {
+      id: "/reset-password";
+      path: "/reset-password";
+      fullPath: "/reset-password";
+      preLoaderRoute: typeof ResetPasswordRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/app/settings": {
-      id: "/app/settings";
-      path: "/settings";
-      fullPath: "/app/settings";
-      preLoaderRoute: typeof AppSettingsRouteImport;
-      parentRoute: typeof AppRoute;
+    "/signup": {
+      id: "/signup";
+      path: "/signup";
+      fullPath: "/signup";
+      preLoaderRoute: typeof SignupRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/app/project": {
-      id: "/app/project";
-      path: "/project";
-      fullPath: "/app/project";
-      preLoaderRoute: typeof AppProjectRouteImport;
-      parentRoute: typeof AppRoute;
+    "/store": {
+      id: "/store";
+      path: "/store";
+      fullPath: "/store";
+      preLoaderRoute: typeof StoreRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    "/app/onboarding": {
-      id: "/app/onboarding";
-      path: "/onboarding";
-      fullPath: "/app/onboarding";
-      preLoaderRoute: typeof AppOnboardingRouteImport;
-      parentRoute: typeof AppRoute;
-    };
-    "/app/finance": {
-      id: "/app/finance";
-      path: "/finance";
-      fullPath: "/app/finance";
-      preLoaderRoute: typeof AppFinanceRouteImport;
-      parentRoute: typeof AppRoute;
-    };
-    "/app/files": {
-      id: "/app/files";
-      path: "/files";
-      fullPath: "/app/files";
-      preLoaderRoute: typeof AppFilesRouteImport;
-      parentRoute: typeof AppRoute;
-    };
-    "/app/dashboard": {
-      id: "/app/dashboard";
-      path: "/dashboard";
-      fullPath: "/app/dashboard";
-      preLoaderRoute: typeof AppDashboardRouteImport;
+    "/app/admin": {
+      id: "/app/admin";
+      path: "/admin";
+      fullPath: "/app/admin";
+      preLoaderRoute: typeof AppAdminRouteImport;
       parentRoute: typeof AppRoute;
     };
     "/app/communication": {
@@ -455,12 +399,68 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppCommunicationRouteImport;
       parentRoute: typeof AppRoute;
     };
-    "/app/admin": {
-      id: "/app/admin";
-      path: "/admin";
-      fullPath: "/app/admin";
-      preLoaderRoute: typeof AppAdminRouteImport;
+    "/app/dashboard": {
+      id: "/app/dashboard";
+      path: "/dashboard";
+      fullPath: "/app/dashboard";
+      preLoaderRoute: typeof AppDashboardRouteImport;
       parentRoute: typeof AppRoute;
+    };
+    "/app/files": {
+      id: "/app/files";
+      path: "/files";
+      fullPath: "/app/files";
+      preLoaderRoute: typeof AppFilesRouteImport;
+      parentRoute: typeof AppRoute;
+    };
+    "/app/finance": {
+      id: "/app/finance";
+      path: "/finance";
+      fullPath: "/app/finance";
+      preLoaderRoute: typeof AppFinanceRouteImport;
+      parentRoute: typeof AppRoute;
+    };
+    "/app/onboarding": {
+      id: "/app/onboarding";
+      path: "/onboarding";
+      fullPath: "/app/onboarding";
+      preLoaderRoute: typeof AppOnboardingRouteImport;
+      parentRoute: typeof AppRoute;
+    };
+    "/app/project": {
+      id: "/app/project";
+      path: "/project";
+      fullPath: "/app/project";
+      preLoaderRoute: typeof AppProjectRouteImport;
+      parentRoute: typeof AppRoute;
+    };
+    "/app/settings": {
+      id: "/app/settings";
+      path: "/settings";
+      fullPath: "/app/settings";
+      preLoaderRoute: typeof AppSettingsRouteImport;
+      parentRoute: typeof AppRoute;
+    };
+    "/chronoblog/": {
+      id: "/chronoblog/";
+      path: "/chronoblog";
+      fullPath: "/chronoblog/";
+      preLoaderRoute: typeof ChronoblogIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/chronoblog/$slug": {
+      id: "/chronoblog/$slug";
+      path: "/chronoblog/$slug";
+      fullPath: "/chronoblog/$slug";
+      preLoaderRoute: typeof ChronoblogSlugRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/join/$token": {
+      id: "/join/$token";
+      path: "/join/$token";
+      fullPath: "/join/$token";
+      preLoaderRoute: typeof JoinTokenRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
     "/app/admin/": {
       id: "/app/admin/";
@@ -469,18 +469,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppAdminIndexRouteImport;
       parentRoute: typeof AppAdminRoute;
     };
-    "/app/admin/waitlist": {
-      id: "/app/admin/waitlist";
-      path: "/waitlist";
-      fullPath: "/app/admin/waitlist";
-      preLoaderRoute: typeof AppAdminWaitlistRouteImport;
-      parentRoute: typeof AppAdminRoute;
-    };
-    "/app/admin/store": {
-      id: "/app/admin/store";
-      path: "/store";
-      fullPath: "/app/admin/store";
-      preLoaderRoute: typeof AppAdminStoreRouteImport;
+    "/app/admin/blog": {
+      id: "/app/admin/blog";
+      path: "/blog";
+      fullPath: "/app/admin/blog";
+      preLoaderRoute: typeof AppAdminBlogRouteImport;
       parentRoute: typeof AppAdminRoute;
     };
     "/app/admin/preview": {
@@ -490,11 +483,18 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppAdminPreviewRouteImport;
       parentRoute: typeof AppAdminRoute;
     };
-    "/app/admin/blog": {
-      id: "/app/admin/blog";
-      path: "/blog";
-      fullPath: "/app/admin/blog";
-      preLoaderRoute: typeof AppAdminBlogRouteImport;
+    "/app/admin/store": {
+      id: "/app/admin/store";
+      path: "/store";
+      fullPath: "/app/admin/store";
+      preLoaderRoute: typeof AppAdminStoreRouteImport;
+      parentRoute: typeof AppAdminRoute;
+    };
+    "/app/admin/waitlist": {
+      id: "/app/admin/waitlist";
+      path: "/waitlist";
+      fullPath: "/app/admin/waitlist";
+      preLoaderRoute: typeof AppAdminWaitlistRouteImport;
       parentRoute: typeof AppAdminRoute;
     };
   }

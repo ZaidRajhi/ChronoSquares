@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, CalendarDays, Check, CheckCircle2, ChevronRight, Clock3, DollarSign, FileText, Filter, MessageCircle, Paperclip, Plus, Send, ShieldCheck, Upload, Users, X } from "lucide-react";
 import { toast } from "sonner";
 import { formatDate, getClientForWorkspace, relativeDate, useDelivery, type DeliveryApproval, type DeliveryFile, type DeliveryProject, type DeliveryRole, type DeliveryTask } from "@/lib/delivery";
-import { AccessNote, ActionLink, AlertText, Checkmark, DeliveryPage, EmptyState, ProgressBar, RoleSwitcher, SectionCard, StatCard, StatusPill } from "@/components/delivery/DeliveryShell";
+import { AccessNote, ActionLink, AlertText, Checkmark, DeliveryPage, EmptyState, ProgressBar, ProviderSetupScreen, RoleSwitcher, SectionCard, StatCard, StatusPill } from "@/components/delivery/DeliveryShell";
 
 function visibleProjects(projects: DeliveryProject[], role: string) {
   return role === "provider" ? projects : projects.filter((project) => project.client_visible).slice(0, 1);
@@ -86,12 +86,25 @@ export function OnboardingPage() {
   const delivery = useDelivery();
   const [answers, setAnswers] = useState(delivery.intake.answers);
   const [saving, setSaving] = useState(false);
-  if (delivery.needsSetup) return <ProviderSetupPage />;
+  if (delivery.needsSetup) return <ProviderSetupScreen />;
 
-  const { role, intake, documents, clients, workspaces, projects } = delivery;
+  const { role, intake, documents, clients, workspaces, projects, activeSpace } = delivery;
   const client = getClientForWorkspace(workspaces, clients, intake.workspace_id);
   const received = documents.filter((document) => document.status !== "requested").length;
   const documentProgress = documents.length ? Math.round((received / documents.length) * 100) : 0;
+
+  // Onboarding stages are derived from real workspace state — never hard-coded.
+  const workspaceStatus = activeSpace?.workspaceStatus ?? "onboarding";
+  const hasClient = Boolean(client);
+  const intakeSubmitted = intake.status === "submitted" || intake.status === "closed";
+  const documentsSettled = documents.length > 0 && received === documents.length;
+  const kickoffReady = workspaceStatus === "active" || workspaceStatus === "complete";
+  const stages = [
+    { label: "Workspace created", done: true, hint: "Ready" },
+    { label: "Client added", done: hasClient, hint: hasClient ? "Linked" : "Invite when ready" },
+    { label: "Intake submitted", done: intakeSubmitted, hint: intakeSubmitted ? "Received" : "Waiting on client" },
+    { label: "Kickoff ready", done: kickoffReady, hint: kickoffReady ? "Live" : "Provider marks this" },
+  ];
 
   const submit = async () => {
     setSaving(true);
@@ -108,7 +121,7 @@ export function OnboardingPage() {
   return (
     <DeliveryPage eyebrow="Square 01 / onboarding" title={role === "provider" ? "Bring every new client in smoothly." : "Let’s get the relationship started."} description={role === "provider" ? "Track the handover from accepted proposal to a ready-to-run workspace." : "A short intake and a few documents are all that stand between you and kickoff."} action={<RoleSwitcher />}>
       <div className="grid sm:grid-cols-4 gap-2">
-        {["Proposal", "Agreement", "Initial payment", "Ready for kickoff"].map((label, index) => <div key={label} className={`rounded-lg border p-3 ${index < 3 ? "border-brand/40 bg-brand/5" : "border-border"}`}><div className="flex items-center gap-2"><span className={`size-5 rounded-full flex items-center justify-center text-[10px] ${index < 3 ? "bg-brand text-brand-foreground" : "bg-muted text-muted-foreground"}`}>{index < 3 ? <Check size={12} /> : index + 1}</span><span className="text-xs font-medium">{label}</span></div><div className="text-[10px] text-muted-foreground mt-2">{index < 3 ? "Complete" : "Next step"}</div></div>)}
+        {stages.map((stage, index) => <div key={stage.label} className={`rounded-lg border p-3 ${stage.done ? "border-brand/40 bg-brand/5" : "border-border"}`}><div className="flex items-center gap-2"><span className={`size-5 rounded-full flex items-center justify-center text-[10px] ${stage.done ? "bg-brand text-brand-foreground" : "bg-muted text-muted-foreground"}`}>{stage.done ? <Check size={12} /> : index + 1}</span><span className="text-xs font-medium">{stage.label}</span></div><div className="text-[10px] text-muted-foreground mt-2">{stage.hint}</div></div>)}
       </div>
 
       <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-4">
@@ -132,79 +145,16 @@ export function OnboardingPage() {
       </div>
 
       <SectionCard label="Handover checklist" meta="Provider managed">
-        <div className="grid sm:grid-cols-3 gap-3">{["Proposal accepted", "Agreement status recorded", "Initial payment status recorded", "Intake submitted", "Required documents received", "Kickoff ready"].map((item, index) => <div key={item} className="flex items-center gap-2 text-sm"><Checkmark checked={index < 3 || (index === 3 && intake.status === "submitted") || (index === 4 && documents.length > 0 && received === documents.length)} /><span className={index > 4 ? "text-muted-foreground" : ""}>{item}</span></div>)}</div>
+        <div className="grid sm:grid-cols-3 gap-3">{[
+          { label: "Workspace created", done: true },
+          { label: "Client added to workspace", done: hasClient },
+          { label: "Kickoff intake opened", done: Boolean(intake.id) },
+          { label: "Intake submitted", done: intakeSubmitted },
+          { label: "Requested documents received", done: documentsSettled },
+          { label: "Kickoff marked ready", done: kickoffReady },
+        ].map((item) => <div key={item.label} className="flex items-center gap-2 text-sm"><Checkmark checked={item.done} /><span className={item.done ? "" : "text-muted-foreground"}>{item.label}</span></div>)}</div>
       </SectionCard>
       {role === "provider" && <InvitationPanel />}
-    </DeliveryPage>
-  );
-}
-
-function ProviderSetupPage() {
-  const { createProviderWorkspace } = useDelivery();
-  const [organizationName, setOrganizationName] = useState("");
-  const [workspaceName, setWorkspaceName] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [clientCompany, setClientCompany] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
-  const [saving, setSaving] = useState(false);
-
-  const submit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setSaving(true);
-    try {
-      await createProviderWorkspace({ organizationName, workspaceName, clientName, clientCompany, clientEmail });
-      toast.success("Your provider workspace is ready.");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "We couldn't create your workspace.");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return (
-    <DeliveryPage
-      eyebrow="Set up your delivery workspace"
-      title="Start with a real client relationship."
-      description="Create your provider workspace, add the first client relationship, and use the connected Supabase workspace from the first step."
-    >
-      <div className="max-w-2xl">
-        <SectionCard label="Provider setup" meta="Required once">
-          <form onSubmit={submit} className="space-y-5">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <label className="block">
-                <span className="text-xs font-medium">Your business or studio</span>
-                <input required minLength={2} value={organizationName} onChange={(event) => setOrganizationName(event.target.value)} placeholder="FlowGrid Studio" className="w-full mt-1.5 bg-background border border-border rounded-md px-3 py-2 text-sm" />
-              </label>
-              <label className="block">
-                <span className="text-xs font-medium">First workspace name</span>
-                <input required minLength={2} value={workspaceName} onChange={(event) => setWorkspaceName(event.target.value)} placeholder="Website launch" className="w-full mt-1.5 bg-background border border-border rounded-md px-3 py-2 text-sm" />
-              </label>
-            </div>
-            <div className="border-t border-border pt-5">
-              <div className="text-sm font-medium">First client relationship</div>
-              <p className="text-xs text-muted-foreground mt-1">You can invite more clients, contractors, and stakeholders once the workspace is created.</p>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <label className="block">
-                <span className="text-xs font-medium">Client name</span>
-                <input required minLength={2} value={clientName} onChange={(event) => setClientName(event.target.value)} placeholder="Client contact name" className="w-full mt-1.5 bg-background border border-border rounded-md px-3 py-2 text-sm" />
-              </label>
-              <label className="block">
-                <span className="text-xs font-medium">Company</span>
-                <input value={clientCompany} onChange={(event) => setClientCompany(event.target.value)} placeholder="Client company" className="w-full mt-1.5 bg-background border border-border rounded-md px-3 py-2 text-sm" />
-              </label>
-            </div>
-            <label className="block">
-              <span className="text-xs font-medium">Client email <span className="text-muted-foreground font-normal">(optional)</span></span>
-              <input type="email" value={clientEmail} onChange={(event) => setClientEmail(event.target.value)} placeholder="client@example.com" className="w-full mt-1.5 bg-background border border-border rounded-md px-3 py-2 text-sm" />
-            </label>
-            <div className="flex items-center justify-between gap-4 pt-2">
-              <p className="text-xs text-muted-foreground">This creates your provider membership, client record, workspace, and kickoff intake together.</p>
-              <button type="submit" disabled={saving} className="btn-brand shrink-0">{saving ? "Creating..." : "Create workspace"}</button>
-            </div>
-          </form>
-        </SectionCard>
-      </div>
     </DeliveryPage>
   );
 }

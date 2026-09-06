@@ -32,10 +32,10 @@ function AdminLayout() {
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-4xl">
       <div className="mb-6">
         <h1 className="text-xl font-semibold tracking-tight">Admin</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">Manage content, view stats, preview plans.</p>
+        <p className="text-sm text-muted-foreground mt-0.5">Platform administration — content, stats, and previewing the app as a provider or client.</p>
       </div>
       <div className="flex flex-wrap gap-1 border-b border-border mb-6 -mx-1">
         {TABS.map(({ to, label, icon: Icon, exact }) => (
