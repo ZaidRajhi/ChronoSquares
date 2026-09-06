@@ -30,6 +30,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# MCP Supabase
+# MCP Supabase (contains an access token)
 .mcp.json
+
+# Local env (contains Supabase keys)
+.env

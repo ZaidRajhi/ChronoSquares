@@ -1,4 +1,0 @@
-- [ChronoSquares Lovable migration](chronosquares-migration.md) — how the Lovable→standard TanStack Start migration was done and what to watch for.
-- [ChronoSquares themes vs overlays split](chronosquares-themes-overlays-split.md) — how Theme (color) and Overlay (shape/style) were separated using one catalogue table, no schema migration.
-- [ChronoSquares delivery account boundaries](chronosquares-delivery-account-boundaries.md) — delivery state is real, fail-closed Supabase data with atomic setup and role-bound invites.
-- [Supabase connection path](supabase-connection.md) — direct database host may be IPv6-only; use the regional session pooler for SQL migrations.
