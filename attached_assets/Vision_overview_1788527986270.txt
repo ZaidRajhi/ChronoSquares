@@ -1,0 +1,280 @@
+This is the AI generated overview of the vision, mostly accurate and done in collaboration with me, only one detail is wrong which is FlowGrid coming before ChronoSquares, I never specified this. Ignore the details of the setup. I just need you to focus on the vision since it seems you haven't understood somethings fully. 
+### Branding
+
+- Business name: ChronoSquares
+- Business email: hello@chronosquares.com
+- Business website:
+- Business telephone:
+- Business address:
+- Logo:
+
+<aside>
+
+!file_000000008b9471fd9e4be1565358f41c.png
+
+</aside>
+
+- Moto:
+    - Master Your Minutes, Block by Block
+    - **Own Your hours. Square Them Up**
+    - Shape Your Time, Shape Your Results
+    - Find Your Hours, Square Your Powers
+    - A Square Deal on Time
+
+### Core Promise
+
+- Our mission is to help agencies reclaim their time through a seamless client intake and service-delivery system—bringing every task, contract, cost, update, and involved party into one organised place.
+
+### Vision
+
+- Become the operating system for service delivery: a platform where every party involved can collaborate seamlessly from the first enquiry through onboarding, delivery, payment, support, and renewal.
+- Begin with service-based agencies that currently manage clients through disconnected tools, then expand to other professional service businesses once the core system is proven.
+
+### Business setup
+
+- Formation agent: Privacy Package
+- Virtual office: Included in privacy package
+- Mail forwarding: Included in privacy package
+- Business bank account: Starling or Monzo
+- Domain: Search and register available domain names | Cloudflare Registrar
+- Email with @chronosquares.com: Zoho Mail
+- Hosting app:
+    - Vercel
+- Payments & Digital Product Delivery / subscription management
+    - Lemon Squeezy — https://lemonsqueezy.com/
+        - Stripe (payment processing) — https://stripe.com/
+- Email Marketing / Lists options:
+    - ConvertKit — https://convertkit.com/
+    - Beehiiv — https://beehiiv.com/
+    - MailerLite — https://www.mailerlite.com/
+- Analytics:
+    - Google Analytics — https://analytics.google.com/
+- Design Tools (Website + Graphics)
+    - Figma — https://www.figma.com/
+    - Canva — https://www.canva.com/
+- Video Editing:
+    - Cap Cut
+- Templates sold on Notion Marketplace
+- App:
+    - Frontend design: Replit or Lovable (no-code friendly)
+    - Backend: Supabase
+    - Gating: Lemon Squeezy
+    - Automations:
+- Music:
+    - Suno AI
+
+### ChronoSquares Platform (SaaS)
+
+#### Product purpose
+
+ChronoSquares is a shared client-delivery platform for managing the complete relationship between a service provider, the client, and any other parties involved.
+
+- Give every party one reliable source of truth
+- Make responsibilities, progress, costs, and decisions visible
+- Automate repetitive handovers and administration
+- Provide clients with a professional and reassuring experience
+- Let providers manage the detailed operation without overwhelming the client
+
+#### Initial niche
+
+- Service-based agencies
+- Approximately 5 to 50 active clients
+- Retainer-based or project-based work
+- Manual or fragmented onboarding and delivery processes
+- Teams currently relying on email, spreadsheets, forms, documents, and disconnected project tools
+
+#### Parties and access
+
+Each person receives a role-based view containing only the information and actions relevant to them.
+
+- **Service provider:** oversees clients, projects, finances, risks, tasks, and internal operations
+- **Client:** reviews progress, completes requests, approves work, accesses files, and sees agreed costs
+- **Contractor or partner:** receives assigned work, deadlines, files, and relevant communication
+- **Other stakeholders:** can be invited for specific approvals, deliverables, or stages
+
+#### The 7 Squares
+
+The seven core Squares represent the full service lifecycle.
+
+1. **Lead Square** — enquiries, qualification, discovery, proposals, and quotations
+2. **Onboarding Square** — intake forms, contracts, initial payments, document collection, and kickoff
+3. **Project Square** — milestones, tasks, responsibilities, dependencies, and progress
+4. **Communication Square** — updates, questions, decisions, approvals, and meeting records
+5. **Finance Square** — costs, budgets, invoices, payments, and financial visibility
+6. **Files Square** — contracts, assets, working documents, versions, and final deliverables
+7. **Care Square** — support, feedback, issue resolution, renewals, and ongoing client success
+
+#### Client lifecycle
+
+1. A lead submits an enquiry or is added by the provider.
+2. The provider qualifies the lead and sends a proposal or quotation.
+3. The client accepts, signs the contract, pays, and completes onboarding requirements.
+4. ChronoSquares creates the shared workspace, project structure, tasks, milestones, and requests.
+5. All parties track delivery, communicate, approve work, and exchange files in one place.
+6. The project closes with final delivery, payment, feedback, and an organised record.
+7. The relationship moves into support, renewal, or another project without restarting the process.
+
+#### Shared workspace model
+
+- One provider can manage multiple organisations, clients, and projects
+- One client can access multiple active and completed services
+- A project can involve internal team members, clients, contractors, and external partners
+- Permissions separate private provider operations from shared client information
+- Every action contributes to a clear history of what happened and when
+
+#### Workflow Layer
+
+The Workflow Layer connects the Squares and moves information through the service lifecycle.
+
+- Trigger contracts, payment requests, forms, tasks, reminders, and status changes
+- Create the correct workspace when a proposal is accepted
+- Notify the right party when an action or approval is required
+- Prevent stages from progressing until required conditions are complete
+- Connect external tools where businesses still need them
+
+#### AI Architect
+
+The AI Architect helps providers configure and operate their service systems.
+
+- Build workflows from a plain-language description of a service
+- Generate onboarding checklists, forms, milestones, and client updates
+- Summarise progress, risks, overdue actions, and recent decisions
+- Help users locate contracts, costs, files, and previous communication
+- Recommend improvements based on repeated bottlenecks
+
+#### Business model
+
+- Subscription based primarily on provider organisation size, active clients, or both
+- Clients and invited external parties access shared workspaces without purchasing a full provider account
+- Higher plans unlock advanced workflows, permissions, reporting, integrations, and AI usage
+- Optional implementation, migration, and custom automation delivered through FlowGrid
+
+#### Initial MVP
+
+Focus on one complete workflow rather than building every Square at full depth.
+
+- Provider dashboard
+- Client portal
+- Intake form and document collection
+- Proposal, contract, and initial payment status
+- Project milestones and shared progress
+- Tasks, approvals, files, and updates
+- Basic cost and invoice tracking
+- Automated reminders and handovers
+
+### ChronoBlog
+
+#### Brand role
+
+- The educational and content arm of ChronoSquares
+- Builds trust with service businesses before they are ready to buy
+- Documents lessons learned through FlowGrid implementations and product development
+
+#### Content themes
+
+- Client onboarding
+- Service-delivery systems
+- Client experience and retention
+- Automation and operational design
+- Contracts, approvals, handovers, and scope control
+- Building transparent relationships between clients and providers
+
+#### Purpose
+
+- Attract the initial target market through useful, practical guidance
+- Validate common problems and language used by potential customers
+- Turn proven advice into templates, workflows, and ChronoSquares product features
+
+### FlowGrid
+
+FlowGrid is the service arm that designs and implements client-delivery systems for businesses while ChronoSquares develops into the scalable software product.
+
+### Brand role
+
+- **ChronoSquares:** the platform clients and service providers use
+- **FlowGrid:** the implementation and consulting service that builds the system around a business
+- FlowGrid generates early revenue, validates demand, and reveals which workflows ChronoSquares should standardise
+- Suitable FlowGrid clients can later migrate from bespoke systems into ChronoSquares
+
+### Niche
+
+- Service-based agencies with approximately 5 to 50 active clients
+- Marketing, creative, consulting, development, and operational service businesses
+- Retainer-based or project-based delivery
+- Manual onboarding and inconsistent client handovers
+- Fragmented systems built across email, spreadsheets, forms, documents, and separate task tools
+- Businesses that value consistency, time savings, fewer errors, and a professional client experience
+
+### Service offer
+
+#### Core service
+
+- Audit the current client journey and operational bottlenecks
+- Design a clear onboarding and service-delivery workflow
+- Build the provider workspace and client-facing portal
+- Connect forms, contracts, payments, files, communication, and task creation
+- Automate reminders, handovers, approvals, and status changes
+- Train the team and document the finished system
+
+#### Typical deliverables
+
+- Lead and client intake system
+- Proposal and contract workflow
+- Payment trigger and status tracking
+- Document and asset collection
+- Internal project and task creation
+- Client welcome portal
+- Progress, approval, and update system
+- Ongoing support and renewal workflow
+
+### Technology
+
+- Notion for the operational workspace and client portal
+- n8n for automation and system connections
+- Email provider for communication and notifications
+- E-signature tool for contracts
+- Payment provider for invoices or payment collection
+- Other specialist tools where the client’s workflow requires them
+
+### Pricing
+
+#### Setup fee
+
+- £1,000 minimum
+- £2,500 standard
+- £4,000 complex
+
+#### Monthly support
+
+- £99 basic
+- £199 standard
+- £299 priority
+
+#### Recurring value
+
+- Hosting and automation monitoring
+- Maintenance and issue resolution
+- Workflow improvements
+- Iteration requests
+- Future migration support for ChronoSquares
+
+### Operating model
+
+1. **Discover** — understand the business, service, client journey, and current tools
+2. **Audit** — identify delays, duplicate work, weak handovers, and client friction
+3. **Design** — map the future workflow, responsibilities, permissions, and automations
+4. **Build** — create and connect the required systems
+5. **Test** — run the workflow using realistic client scenarios
+6. **Launch** — migrate active information and train the team
+7. **Support** — maintain, improve, and learn from the live system
+
+### Product feedback loop
+
+- Record problems that appear across multiple FlowGrid clients
+- Identify the features businesses repeatedly pay to have built
+- Standardise common data structures, permissions, and workflows
+- Build those proven patterns into ChronoSquares
+- Avoid adding features based only on assumptions
+- Use bespoke FlowGrid work for edge cases that should not enter the core product
+
+### Notes
