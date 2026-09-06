@@ -4,7 +4,7 @@ import { z } from "zod";
 import { PublicShell } from "@/components/public/PublicShell";
 import { ArrowRight, Search, X, Clock, Calendar } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { ARTICLES, ALL_TAGS } from "@/lib/chronoblog-articles";
+import { fetchArticles } from "@/lib/chronoblog";
 
 const searchSchema = z.object({
   q: fallback(z.string(), "").default(""),
@@ -14,6 +14,7 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/chronoblog/")({
   validateSearch: zodValidator(searchSchema),
+  loader: async () => ({ articles: await fetchArticles() }),
   head: () => ({
     meta: [
       { title: "ChronoBlog — ChronoSquares" },
@@ -27,14 +28,17 @@ export const Route = createFileRoute("/chronoblog/")({
 
 function BlogIndex() {
   const { q, tag, sort } = Route.useSearch();
+  const { articles } = Route.useLoaderData();
   const navigate = useNavigate();
+
+  const ALL_TAGS = Array.from(new Set(articles.flatMap((a) => a.tags))).sort();
 
   type SearchState = { q: string; tag: string; sort: typeof sort };
   const setSearch = (next: Partial<SearchState>) =>
     navigate({ to: "/chronoblog", search: (prev: SearchState) => ({ ...prev, ...next }) });
 
   const query = q.trim().toLowerCase();
-  const filtered = ARTICLES.filter((a) => {
+  const filtered = articles.filter((a) => {
     if (tag && !a.tags.includes(tag)) return false;
     if (!query) return true;
     return (

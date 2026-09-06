@@ -1,11 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PublicShell } from "@/components/public/PublicShell";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
-import { ARTICLES_BY_SLUG } from "@/lib/chronoblog-articles";
+import { fetchArticleBySlug } from "@/lib/chronoblog";
 
 export const Route = createFileRoute("/chronoblog/$slug")({
-  loader: ({ params }) => {
-    const article = ARTICLES_BY_SLUG[params.slug];
+  loader: async ({ params }) => {
+    const article = await fetchArticleBySlug(params.slug);
     if (!article) throw notFound();
     return { article };
   },

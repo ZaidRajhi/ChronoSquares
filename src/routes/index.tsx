@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PublicShell } from "@/components/public/PublicShell";
 import { WaitlistForm } from "@/components/public/WaitlistForm";
+import { fetchLatestArticles } from "@/lib/chronoblog";
 import {
   Activity, Clock, CheckSquare, Target, BookOpen, Wallet,
   Users, Inbox, ArrowRight, Sparkles, Zap, Workflow, Check,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
+  loader: async () => ({ articles: await fetchLatestArticles(3) }),
   head: () => ({
     meta: [
       { title: "ChronoSquares — Client delivery, squared up." },
@@ -53,28 +55,8 @@ const ADDONS = [
   },
 ];
 
-const ARTICLES = [
-  {
-    slug: "client-onboarding-without-chaos",
-    title: "Client Onboarding Without the Chaos",
-    excerpt:
-      "A practical look at the information, decisions, and handovers that make a client kickoff feel professional.",
-  },
-  {
-    slug: "service-delivery-operating-system",
-    title: "Designing a Service-Delivery Operating System",
-    excerpt:
-      "How agencies can connect people, projects, communication, files, and costs without adding more scattered tools.",
-  },
-  {
-    slug: "approvals-scope-and-handover",
-    title: "Approvals, Scope, and the Handover",
-    excerpt:
-      "Why clear ownership and visible decisions reduce friction for both service providers and clients.",
-  },
-];
-
 function HomePage() {
+  const { articles } = Route.useLoaderData();
   return (
     <PublicShell>
       {/* HERO */}
@@ -283,22 +265,24 @@ function HomePage() {
              Practical thinking for calmer client delivery and better working relationships.
           </p>
         </div>
-        <div className="mt-12 grid md:grid-cols-3 gap-5">
-          {ARTICLES.map((a) => (
-            <Link
-              key={a.slug}
-              to="/chronoblog/$slug"
-              params={{ slug: a.slug }}
-              className="hover-tile p-6 block"
-            >
-              <h3 className="text-lg font-semibold tracking-tight">{a.title}</h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{a.excerpt}</p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm text-brand">
-                Read more <ArrowRight size={14} />
-              </span>
-            </Link>
-          ))}
-        </div>
+        {articles.length > 0 && (
+          <div className="mt-12 grid md:grid-cols-3 gap-5">
+            {articles.map((a) => (
+              <Link
+                key={a.slug}
+                to="/chronoblog/$slug"
+                params={{ slug: a.slug }}
+                className="hover-tile p-6 block"
+              >
+                <h3 className="text-lg font-semibold tracking-tight">{a.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{a.excerpt}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm text-brand">
+                  Read more <ArrowRight size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
         <div className="mt-10 text-center">
           <Link to="/chronoblog" className="btn-outline-brand text-sm">View All Articles</Link>
         </div>
